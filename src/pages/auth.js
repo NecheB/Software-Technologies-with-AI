@@ -31,3 +31,7 @@ form.addEventListener("submit", async (event) => {
     button.disabled = false;
   }
 });
+
+// Enable submission only after the handler has been installed.
+form.querySelector("button").disabled = false;
+document.querySelector("#status").textContent = "";
