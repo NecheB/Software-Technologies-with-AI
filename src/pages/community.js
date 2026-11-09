@@ -70,16 +70,22 @@ document.querySelector("#compose").onsubmit = async (event) => {
   button.disabled = true;
   try {
     const { db, user } = await session();
-    await checked(
-      db.from("topics").insert({
-        ...Object.fromEntries(new FormData(form)),
-        author_id: user.id,
-      }),
+    const saved = await checked(
+      db
+        .from("topics")
+        .insert({
+          ...Object.fromEntries(new FormData(form)),
+          author_id: user.id,
+        })
+        .select("status")
+        .single(),
     );
     form.reset();
     message(
       notice,
-      "Your discussion was submitted for review. You can track it under My discussions.",
+      saved.status === "approved"
+        ? "Published successfully."
+        : "Your discussion was submitted for review. You can track it under My discussions.",
     );
     window.dispatchEvent(new Event("borough:moderated"));
     page = 0;

@@ -32,7 +32,7 @@ try {
       ],
       { ...b, amenities: b.amenities?.join(", ") },
     ) +
-    `<label for="category_id" class="form-label">Category</label><select class="form-select" name="category_id" id="category_id" required>${categories.map((c) => `<option value="${c.id}" ${c.id === b.category_id ? "selected" : ""}>${escapeHtml(c.name)}</option>`).join("")}</select><label for="price_level" class="form-label">Price level (1-4)</label><input class="form-control" type="number" min="1" max="4" name="price_level" id="price_level" value="${b.price_level}"><button class="btn btn-dark mt-4">Submit for review</button>`;
+    `<label for="category_id" class="form-label">Category</label><select class="form-select" name="category_id" id="category_id" required>${categories.map((c) => `<option value="${c.id}" ${c.id === b.category_id ? "selected" : ""}>${escapeHtml(c.name)}</option>`).join("")}</select><label for="price_level" class="form-label">Price level (1-4)</label><input class="form-control" type="number" min="1" max="4" name="price_level" id="price_level" value="${b.price_level}"><button class="btn btn-dark mt-4">Save business</button>`;
   const groups = [
     [
       "Business essentials",
@@ -108,7 +108,15 @@ try {
         ).id;
         history.replaceState(null, "", `?id=${id}`);
       }
-      message(status, "Saved and submitted for review.");
+      const saved = await checked(
+        db.from("businesses").select("status").eq("id", id).single(),
+      );
+      message(
+        status,
+        saved.status === "approved"
+          ? "Saved and published."
+          : "Saved and submitted for review.",
+      );
       await loadFiles();
     } catch (error) {
       message(status, error.message, true);

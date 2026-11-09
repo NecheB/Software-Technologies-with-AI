@@ -39,7 +39,7 @@ test("migrations enforce private profiles, moderation and immutable ownership", 
           "select count(*)::int n from supabase_migrations.schema_migrations",
         )
       ).rows[0].n,
-      4,
+      5,
     );
     const owner = "00000000-0000-4000-8000-000000000001",
       other = "00000000-0000-4000-8000-000000000002",
@@ -179,6 +179,63 @@ test("migrations enforce private profiles, moderation and immutable ownership", 
         `insert into public.restrictions(user_id,permission,reason) values('${admin}','all','Cannot restrict admin')`,
       ),
       /Administrator/,
+    );
+    const adminBusiness = (
+      await db.query(
+        `insert into public.businesses(owner_id,category_id,name,description,email,address,city) values('${admin}','00000000-0000-4000-8000-000000000004','Admin Cafe','An administrator owned independent coffee shop.','test@example.com','1 Street','London') returning id,status`,
+      )
+    ).rows[0];
+    assert.equal(adminBusiness.status, "approved");
+    await db.exec(
+      `insert into public.business_files(business_id,uploaded_by,path,name,mime_type,size_bytes) values('${adminBusiness.id}','${admin}','${admin}/${adminBusiness.id}/photo.png','photo.png','image/png',128)`,
+    );
+    assert.equal(
+      (
+        await db.query(
+          `select status from public.businesses where id='${adminBusiness.id}'`,
+        )
+      ).rows[0].status,
+      "approved",
+    );
+    // Admin submissions publish directly, but explicit rejection remains effective.
+    const adminTopic = (
+      await db.query(
+        `insert into public.topics(author_id,title,body) values('${admin}','Administrator announcement','A published administrator announcement.') returning id,status`,
+      )
+    ).rows[0];
+    assert.equal(adminTopic.status, "approved");
+    await db.exec(
+      `update public.topics set status='rejected' where id='${adminTopic.id}'`,
+    );
+    assert.equal(
+      (
+        await db.query(
+          `select status from public.topics where id='${adminTopic.id}'`,
+        )
+      ).rows[0].status,
+      "rejected",
+    );
+    await db.exec(
+      `update public.topics set body='An updated administrator announcement.' where id='${adminTopic.id}'`,
+    );
+    assert.equal(
+      (
+        await db.query(
+          `select status from public.topics where id='${adminTopic.id}'`,
+        )
+      ).rows[0].status,
+      "approved",
+    );
+    await db.exec(
+      `update public.businesses set tagline='Staff revision' where id='${business.id}'`,
+    );
+    assert.equal(
+      (
+        await db.query(
+          `select status from public.businesses where id='${business.id}'`,
+        )
+      ).rows[0].status,
+      "approved",
     );
   } finally {
     await db.close();

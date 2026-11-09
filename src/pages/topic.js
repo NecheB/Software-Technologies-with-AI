@@ -64,17 +64,23 @@ document.querySelector("#reply").onsubmit = async (event) => {
   button.disabled = true;
   try {
     const { db, user } = await session();
-    await checked(
-      db.from("posts").insert({
-        topic_id: id,
-        author_id: user.id,
-        body: event.target.elements.body.value,
-      }),
+    const saved = await checked(
+      db
+        .from("posts")
+        .insert({
+          topic_id: id,
+          author_id: user.id,
+          body: event.target.elements.body.value,
+        })
+        .select("status")
+        .single(),
     );
     event.target.reset();
     message(
       document.querySelector("#reply-status"),
-      "Reply submitted for review.",
+      saved.status === "approved"
+        ? "Published successfully."
+        : "Reply submitted for review.",
     );
     window.dispatchEvent(new Event("borough:moderated"));
     await replies();

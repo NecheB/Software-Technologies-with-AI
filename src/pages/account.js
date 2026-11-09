@@ -18,7 +18,8 @@ try {
   message(status, "");
   document.querySelector("#identity").textContent = user.email;
   document.querySelector("#role").textContent = role.role;
-  document.querySelector("#account-staff").hidden = !types.length;
+  const staffLink = document.querySelector("#account-staff");
+  if (staffLink) staffLink.hidden = !types.length;
   function greeting(name) {
     document.querySelector("#welcome").textContent = name
       ? `Welcome back, ${name.split(" ")[0]}.`

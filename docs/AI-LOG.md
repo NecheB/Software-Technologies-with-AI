@@ -35,3 +35,11 @@ Replaced the disconnected account navigation with a shared responsive workspace 
 People now queries 20 members per page with exact counts, deterministic ordering, name/ID search and server-side role filtering. Restrictions are collapsed by default and fetched in pages of 10. Role changes and restrictions continue through the existing RLS policies. The live joined pagination query was accepted by Supabase (HTTP 200).
 
 The homepage uses original repository-owned SVG neighbourhood artwork, category illustrations, clearer discovery navigation, a community section and motion that respects reduced-motion preferences. No stock business claims or fake usage statistics were introduced. Five automated tests and the production build pass. Visual browser inspection remains unavailable; this limitation is not a claim of visual approval.
+
+## Directory, business detail and administrator publishing
+
+Rebuilt discovery with photo-backed cards, explicit no-photo fallbacks, compact filters, sorting, pagination and real rating summaries (no zero-star rating for businesses without reviews). Cover images use scoped signed Storage URLs. Business details now have a selectable photo gallery, contact/visit panel, directions, amenities, current offers, paginated reviews and download tiles. Missing supplemental media does not hide the core listing.
+
+Fixed the account-page null-reference regression caused by the shared rail replacing the old account sidebar. The removed staff link is now optional and staff access remains in the shared rail.
+
+Added migration 202611090005: administrator-created content and administrator edits publish directly; explicit moderation decisions remain respected. Administrator file changes also publish the business. Existing non-staff pending-content protections remain covered by tests. The user reported successful execution of UPDATE-ADMIN.sql. Local SQL tests verify administrator topics, edits, explicit rejection, business creation and file insertion. Success messages now follow the returned database status. Five tests and the production build passed; live visual inspection is still not claimed.

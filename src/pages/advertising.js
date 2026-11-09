@@ -64,10 +64,19 @@ try {
         if (new Date(data.ends_at) <= new Date())
           throw new Error("Choose an expiry date in the future.");
         data.ends_at = new Date(data.ends_at).toISOString();
-        await checked(
-          db.from("advertisements").insert({ ...data, owner_id: user.id }),
+        const saved = await checked(
+          db
+            .from("advertisements")
+            .insert({ ...data, owner_id: user.id })
+            .select("status")
+            .single(),
         );
-        message(status, "Promotion submitted for review.");
+        message(
+          status,
+          saved.status === "approved"
+            ? "Promotion published."
+            : "Promotion submitted for review.",
+        );
         form.reset();
         form.oninput();
         await campaigns();
