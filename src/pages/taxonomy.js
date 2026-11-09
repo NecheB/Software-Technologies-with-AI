@@ -1,5 +1,57 @@
-import {shell,message} from '../components/shell.js';
-import {staff} from '../components/staff.js';
-import {checked} from '../services/session.js';
-shell('Categories');const status=document.querySelector('#status');
-try{const {db}=await staff('categories.manage');const form=document.querySelector('form');async function load(){const categories=await checked(db.from('categories').select('*').order('name'));const list=document.querySelector('#categories');list.replaceChildren();form.elements.parent_id.replaceChildren(new Option('Top level',''));for(const c of categories){if(!c.parent_id)form.elements.parent_id.add(new Option(c.name,c.id));const row=document.createElement('p');row.textContent=c.name+(c.parent_id?' (subcategory)':'');const b=document.createElement('button');b.className='btn btn-link';b.textContent='Delete';b.onclick=async()=>{if(!confirm(`Delete ${c.name}?`))return;try{await checked(db.from('categories').delete().eq('id',c.id));await load();}catch(e){message(status,e.message,true);}};row.append(b);list.append(row);}}form.onsubmit=async e=>{e.preventDefault();try{await checked(db.from('categories').insert({name:form.elements.name.value,parent_id:form.elements.parent_id.value||null}));form.reset();await load();message(status,'Category created.');}catch(e){message(status,e.message,true);}};await load();}catch(e){message(status,e.message,true);}
+import { shell, message } from "../components/shell.js";
+import { staff } from "../components/staff.js";
+import { checked } from "../services/session.js";
+shell("Categories");
+const status = document.querySelector("#status");
+try {
+  const { db } = await staff("categories.manage");
+  const form = document.querySelector("form");
+  async function load() {
+    const categories = await checked(
+      db.from("categories").select("*").order("name"),
+    );
+    const list = document.querySelector("#categories");
+    list.replaceChildren();
+    form.elements.parent_id.replaceChildren(new Option("Top level", ""));
+    for (const c of categories) {
+      if (!c.parent_id) form.elements.parent_id.add(new Option(c.name, c.id));
+      const row = document.createElement("p");
+      row.textContent = c.name + (c.parent_id ? " (subcategory)" : "");
+      const b = document.createElement("button");
+      b.className = "btn btn-link";
+      b.textContent = "Delete";
+      b.onclick = async () => {
+        if (!confirm(`Delete ${c.name}?`)) return;
+        try {
+          await checked(db.from("categories").delete().eq("id", c.id));
+          await load();
+        } catch (e) {
+          message(status, e.message, true);
+        }
+      };
+      row.append(b);
+      list.append(row);
+    }
+  }
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await checked(
+        db
+          .from("categories")
+          .insert({
+            name: form.elements.name.value,
+            parent_id: form.elements.parent_id.value || null,
+          }),
+      );
+      form.reset();
+      await load();
+      message(status, "Category created.");
+    } catch (e) {
+      message(status, e.message, true);
+    }
+  };
+  await load();
+} catch (e) {
+  message(status, e.message, true);
+}

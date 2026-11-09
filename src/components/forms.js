@@ -1,3 +1,12 @@
-import {escapeHtml} from '../utils/html.js';
-export function fields(definitions,values={}) {return definitions.map(([name,label,type='text',required=true])=>`<label class="form-label" for="${name}">${label}</label>${type==='textarea'?`<textarea class="form-control" id="${name}" name="${name}" ${required?'required':''} rows="4">${escapeHtml(values[name]??'')}</textarea>`:`<input class="form-control" id="${name}" name="${name}" type="${type}" value="${escapeHtml(values[name]??'')}" ${required?'required':''}>`}`).join('');}
-export function values(form) {return Object.fromEntries(new FormData(form));}
+import { escapeHtml } from "../utils/html.js";
+export function fields(definitions, values = {}) {
+  return definitions
+    .map(
+      ([name, label, type = "text", required = true]) =>
+        `<label class="form-label" for="${name}">${label}</label>${type === "textarea" ? `<textarea class="form-control" id="${name}" name="${name}" ${required ? "required" : ""} rows="4">${escapeHtml(values[name] ?? "")}</textarea>` : `<input class="form-control" id="${name}" name="${name}" type="${type}" value="${escapeHtml(values[name] ?? "")}" ${required ? "required" : ""}>`}`,
+    )
+    .join("");
+}
+export function values(form) {
+  return Object.fromEntries(new FormData(form));
+}
