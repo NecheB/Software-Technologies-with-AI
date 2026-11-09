@@ -3,15 +3,57 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Spread the word. · Borough</title>
+    <title>Promotions - Borough</title>
   </head>
   <body>
     <header id="header"></header>
     <main id="main" class="container page">
-      <h1>Spread the word.</h1>
-      <p>Submit a local offer for moderator approval.</p>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Workspace / Promotions</p>
+          <h1>Give your business a little spotlight.</h1>
+          <p>
+            Create a local offer and follow its progress from submission to
+            publication.
+          </p>
+        </div>
+      </div>
       <p id="status" role="status"></p>
-      <form class="auth"></form>
+      <div class="form-layout">
+        <section class="surface">
+          <div class="surface-heading">
+            <div>
+              <h2>Create a promotion</h2>
+              <p>A clear offer gives people a reason to visit.</p>
+            </div>
+            <span class="step-chip">NEW CAMPAIGN</span>
+          </div>
+          <form id="promotion" class="padded-form"></form>
+        </section>
+        <aside>
+          <div class="campaign-preview">
+            <span class="eyebrow">LIVE PREVIEW</span
+            ><span class="offer-icon"><i class="bi bi-megaphone"></i></span>
+            <p id="preview-business">Your local business</p>
+            <h2 id="preview-title">A good reason to stop by.</h2>
+            <p id="preview-body">
+              Your offer will appear here as you write it.
+            </p>
+            <span class="preview-label">Local offer</span>
+          </div>
+          <div class="help-note">
+            <i class="bi bi-info-circle"></i>
+            <p>
+              Promotions appear on the business page after approval. Include the
+              offer terms and a clear expiry date.
+            </p>
+          </div>
+        </aside>
+      </div>
+      <section class="surface mt-4">
+        <div class="surface-heading"><h2>Your promotions</h2></div>
+        <div id="campaigns"></div>
+      </section>
     </main>
     <footer id="footer"></footer>
     <script type="module" src="/src/pages/advertising.js"></script>

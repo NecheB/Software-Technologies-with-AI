@@ -6,4 +6,4 @@ export async function session() {
   if (!data.user) throw new Error("Please sign in to continue.");
   return { db, user: data.user };
 }
-export {checked} from "../utils/query.js";
+export { checked } from "../utils/query.js";

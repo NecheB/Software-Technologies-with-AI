@@ -71,12 +71,10 @@ document.querySelector("#compose").onsubmit = async (event) => {
   try {
     const { db, user } = await session();
     await checked(
-      db
-        .from("topics")
-        .insert({
-          ...Object.fromEntries(new FormData(form)),
-          author_id: user.id,
-        }),
+      db.from("topics").insert({
+        ...Object.fromEntries(new FormData(form)),
+        author_id: user.id,
+      }),
     );
     form.reset();
     message(

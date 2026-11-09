@@ -65,13 +65,11 @@ document.querySelector("#reply").onsubmit = async (event) => {
   try {
     const { db, user } = await session();
     await checked(
-      db
-        .from("posts")
-        .insert({
-          topic_id: id,
-          author_id: user.id,
-          body: event.target.elements.body.value,
-        }),
+      db.from("posts").insert({
+        topic_id: id,
+        author_id: user.id,
+        body: event.target.elements.body.value,
+      }),
     );
     event.target.reset();
     message(

@@ -27,3 +27,11 @@ Added permission-aware staff navigation and in-app notification counts refreshed
 Community now has a forum-style topic list, reply counts, search, personal discussions, pagination, structured discussion posts and dedicated composers. Account now presents profile editing, role, scoped totals, recent owner listings and discussion statuses in a responsive dashboard. Private member profiles are not exposed as forum author names.
 
 Five tests pass, covering moderation permission selection, combined queue search/order, notification errors, escaping and database authorization. Production build passes and the live forum relation-count query returned HTTP 200. Visual browser acceptance remains pending due to the unavailable browser-control connection.
+
+## Complete workspace and discovery design refresh
+
+Replaced the disconnected account navigation with a shared responsive workspace rail, permission-aware management links, consistent surfaces, inputs, buttons, metrics, tables and status badges. Redesigned business management as a table, grouped business editing into three logical sections, added a promotion preview and campaign history, and gave password recovery a dedicated security layout. The forum and account dashboard now inherit the same visual system.
+
+People now queries 20 members per page with exact counts, deterministic ordering, name/ID search and server-side role filtering. Restrictions are collapsed by default and fetched in pages of 10. Role changes and restrictions continue through the existing RLS policies. The live joined pagination query was accepted by Supabase (HTTP 200).
+
+The homepage uses original repository-owned SVG neighbourhood artwork, category illustrations, clearer discovery navigation, a community section and motion that respects reduced-motion preferences. No stock business claims or fake usage statistics were introduced. Five automated tests and the production build pass. Visual browser inspection remains unavailable; this limitation is not a claim of visual approval.

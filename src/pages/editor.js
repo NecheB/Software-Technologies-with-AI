@@ -33,6 +33,50 @@ try {
       { ...b, amenities: b.amenities?.join(", ") },
     ) +
     `<label for="category_id" class="form-label">Category</label><select class="form-select" name="category_id" id="category_id" required>${categories.map((c) => `<option value="${c.id}" ${c.id === b.category_id ? "selected" : ""}>${escapeHtml(c.name)}</option>`).join("")}</select><label for="price_level" class="form-label">Price level (1-4)</label><input class="form-control" type="number" min="1" max="4" name="price_level" id="price_level" value="${b.price_level}"><button class="btn btn-dark mt-4">Submit for review</button>`;
+  const groups = [
+    [
+      "Business essentials",
+      "The name and story people will discover.",
+      ["name", "tagline", "description", "category_id"],
+    ],
+    [
+      "Contact and location",
+      "Make it easy for your neighbours to find you.",
+      ["email", "phone", "website", "address", "city", "postcode"],
+    ],
+    [
+      "Plan a visit",
+      "Useful details before someone walks through the door.",
+      ["opening_hours", "amenities", "price_level"],
+    ],
+  ];
+  const submit = form.querySelector("button");
+  for (const [title, description, names] of groups) {
+    const section = document.createElement("section");
+    section.className = "editor-section surface";
+    const heading = document.createElement("div");
+    heading.className = "surface-heading";
+    heading.innerHTML = `<div><h2>${title}</h2><p>${description}</p></div>`;
+    section.append(heading);
+    const grid = document.createElement("div");
+    grid.className = "field-grid";
+    for (const name of names) {
+      const input = form.elements[name];
+      if (!input) continue;
+      const label = form.querySelector(`label[for="${name}"]`);
+      const field = document.createElement("div");
+      field.className = ["description", "opening_hours"].includes(name)
+        ? "field-wide"
+        : "";
+      if (label) field.append(label);
+      field.append(input);
+      grid.append(field);
+    }
+    section.append(grid);
+    form.append(section);
+  }
+  form.append(submit);
+  submit.classList.add("editor-save");
   form.onsubmit = async (e) => {
     e.preventDefault();
     const button = form.querySelector("button");

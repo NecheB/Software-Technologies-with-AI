@@ -8,32 +8,53 @@
   <body>
     <header id="header"></header>
     <main id="main" class="container page">
-      <h1>Reset your password.</h1>
-      <p id="status" role="status"></p>
-      <form id="request" class="auth">
-        <label class="form-label" for="email">Email</label
-        ><input
-          class="form-control"
-          type="email"
-          name="email"
-          id="email"
-          autocomplete="email"
-          required
-        /><button class="btn btn-dark mt-3">Send reset link</button>
-      </form>
-      <form id="change" class="auth" hidden>
-        <label class="form-label" for="password"
-          >New password (at least 12 characters)</label
-        ><input
-          class="form-control"
-          type="password"
-          name="password"
-          id="password"
-          minlength="12"
-          autocomplete="new-password"
-          required
-        /><button class="btn btn-dark mt-3">Save password</button>
-      </form>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Workspace / Security</p>
+          <h1>Keep your account secure.</h1>
+          <p>A fresh password. The same neighbourhood.</p>
+        </div>
+      </div>
+      <div class="security-layout">
+        <aside class="security-visual">
+          <div class="security-orbit"><i class="bi bi-shield-check"></i></div>
+          <h2>A little peace of mind.</h2>
+          <p>
+            Your reset link is sent directly to your inbox. Only you can choose
+            your new password.
+          </p>
+        </aside>
+        <section class="surface security-form">
+          <span class="step-chip">ACCOUNT RECOVERY</span>
+          <h2>Reset your password</h2>
+          <p>Enter the email address linked to your Borough account.</p>
+          <p id="status" role="status"></p>
+          <form id="request" class="auth">
+            <label class="form-label" for="email">Email</label
+            ><input
+              class="form-control"
+              type="email"
+              name="email"
+              id="email"
+              autocomplete="email"
+              required
+            /><button class="btn btn-dark mt-3">Send reset link</button>
+          </form>
+          <form id="change" class="auth" hidden>
+            <label class="form-label" for="password"
+              >New password (at least 12 characters)</label
+            ><input
+              class="form-control"
+              type="password"
+              name="password"
+              id="password"
+              minlength="12"
+              autocomplete="new-password"
+              required
+            /><button class="btn btn-dark mt-3">Save password</button>
+          </form>
+        </section>
+      </div>
     </main>
     <footer id="footer"></footer>
     <script type="module" src="/src/pages/reset.js"></script>

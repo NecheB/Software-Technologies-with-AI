@@ -27,10 +27,16 @@ export function staffNotifications() {
       const types = await moderationAccess(db);
       if (!types.length) {
         authorized = false;
+        document
+          .querySelectorAll(".rail-staff")
+          .forEach((el) => (el.hidden = true));
         target.replaceChildren();
         return;
       }
       authorized = true;
+      document
+        .querySelectorAll(".rail-staff")
+        .forEach((el) => (el.hidden = false));
       const counts = await pendingCounts(db, types);
       if (closed) return;
       const total = counts.reduce((sum, r) => sum + r.count, 0);
