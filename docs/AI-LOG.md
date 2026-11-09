@@ -19,3 +19,11 @@ The user ran the generated SQL installer successfully. Live REST checks returned
 ## Registration deployment repair
 
 The user reported that registration simply refreshed the page. Live checks found that all requested JavaScript and CSS asset paths returned HTTP 404 even though HTML routes returned 200. The Windows ZIP uploader had not preserved portable forward-slash paths. Replaced packaging with Python ZipFile using explicit POSIX archive names and republished. Verified all 41 deployed files: HTML contains the app and expected asset references; JavaScript/CSS bytes match the local build and script MIME types are correct. Netlify-injected HTML is permitted by the check. Added disabled-until-ready login/signup buttons and POST fallback so a missing handler cannot serialize credentials into a query string. Live account creation still requires the user's retry; it is not claimed verified by these asset checks.
+
+## Staff workspace, forum and account redesign
+
+Added permission-aware staff navigation and in-app notification counts refreshed every 45 seconds and after moderation. The moderation workspace combines permitted content types, provides category totals, search, status filters, chronological sorting and incremental loading. Decisions compare the previous status to avoid overwriting a concurrent decision. No new database privileges or migrations were required.
+
+Community now has a forum-style topic list, reply counts, search, personal discussions, pagination, structured discussion posts and dedicated composers. Account now presents profile editing, role, scoped totals, recent owner listings and discussion statuses in a responsive dashboard. Private member profiles are not exposed as forum author names.
+
+Five tests pass, covering moderation permission selection, combined queue search/order, notification errors, escaping and database authorization. Production build passes and the live forum relation-count query returned HTTP 200. Visual browser acceptance remains pending due to the unavailable browser-control connection.

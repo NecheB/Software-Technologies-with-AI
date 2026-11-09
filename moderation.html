@@ -3,23 +3,63 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Review queue. · Borough</title>
+    <title>Staff workspace - Borough</title>
   </head>
   <body>
     <header id="header"></header>
     <main id="main" class="container page">
-      <h1>Review queue.</h1>
-      <nav id="staff-nav" class="mb-4" aria-label="Staff tools"></nav>
-      <p id="status" role="status"></p>
-      <label for="kind" class="form-label">Content type</label
-      ><select class="form-select" id="kind">
-        <option value="businesses">Businesses</option>
-        <option value="reviews">Reviews</option>
-        <option value="topics">Topics</option>
-        <option value="posts">Replies</option>
-        <option value="advertisements">Advertisements</option>
-      </select>
+      <div class="dashboard-heading">
+        <div>
+          <p class="eyebrow">Borough / Staff workspace</p>
+          <h1>Keep your community moving.</h1>
+          <p>Every submission in one place. Review, approve and follow up.</p>
+        </div>
+        <button class="btn btn-dark" id="refresh">Refresh queue</button>
+      </div>
+      <nav id="staff-nav" class="staff-tabs" aria-label="Staff tools"></nav>
+      <p id="status" role="status" aria-live="polite"></p>
+      <section
+        id="summary"
+        class="queue-summary"
+        aria-label="Pending submissions by category"
+      ></section>
+      <form id="filters" class="queue-filters">
+        <div>
+          <label for="search" class="form-label">Search submissions</label
+          ><input
+            id="search"
+            class="form-control"
+            type="search"
+            placeholder="Business, title or message..."
+          />
+        </div>
+        <div>
+          <label for="kind" class="form-label">Content type</label
+          ><select id="kind" class="form-select">
+            <option value="all">All content</option>
+          </select>
+        </div>
+        <div>
+          <label for="state" class="form-label">Status</label
+          ><select id="state" class="form-select">
+            <option value="pending">Needs review</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+        <div>
+          <label for="order" class="form-label">Order</label
+          ><select id="order" class="form-select">
+            <option value="oldest">Oldest first</option>
+            <option value="newest">Newest first</option>
+          </select>
+        </div>
+      </form>
+      <p id="result-count" class="text-muted" role="status"></p>
       <div id="queue"></div>
+      <button id="more" class="btn btn-outline-dark" hidden>
+        Load more submissions
+      </button>
     </main>
     <footer id="footer"></footer>
     <script type="module" src="/src/pages/moderation.js"></script>

@@ -11,16 +11,14 @@ export async function uploadFile(db, user, business, file) {
   );
   try {
     await checked(
-      db
-        .from("business_files")
-        .insert({
-          business_id: business,
-          uploaded_by: user.id,
-          path,
-          name: file.name,
-          mime_type: file.type,
-          size_bytes: file.size,
-        }),
+      db.from("business_files").insert({
+        business_id: business,
+        uploaded_by: user.id,
+        path,
+        name: file.name,
+        mime_type: file.type,
+        size_bytes: file.size,
+      }),
     );
   } catch (error) {
     await db.storage.from("business-files").remove([path]);

@@ -37,12 +37,10 @@ try {
     e.preventDefault();
     try {
       await checked(
-        db
-          .from("categories")
-          .insert({
-            name: form.elements.name.value,
-            parent_id: form.elements.parent_id.value || null,
-          }),
+        db.from("categories").insert({
+          name: form.elements.name.value,
+          parent_id: form.elements.parent_id.value || null,
+        }),
       );
       form.reset();
       await load();

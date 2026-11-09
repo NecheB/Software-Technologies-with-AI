@@ -53,14 +53,12 @@ if (idForExtras) {
       try {
         const { user } = await session();
         await checked(
-          db
-            .from("reviews")
-            .insert({
-              business_id: idForExtras,
-              author_id: user.id,
-              rating: Number(e.target.elements.rating.value),
-              body: e.target.elements.body.value,
-            }),
+          db.from("reviews").insert({
+            business_id: idForExtras,
+            author_id: user.id,
+            rating: Number(e.target.elements.rating.value),
+            body: e.target.elements.body.value,
+          }),
         );
         e.target.reset();
         message(

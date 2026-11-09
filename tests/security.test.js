@@ -21,12 +21,26 @@ test("migrations enforce private profiles, moderation and immutable ownership", 
  create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);
  create table storage.objects(id uuid default gen_random_uuid(),bucket_id text,name text);alter table storage.objects enable row level security;
  grant usage on schema storage to anon,authenticated;grant select,insert,delete on storage.objects to anon,authenticated;`);
-    const installer = await readFile('supabase/INSTALL.sql','utf8');
-    for (const file of (await readdir('supabase/migrations')).filter(f=>f.endsWith('.sql'))) {
-      assert.ok(installer.includes(await readFile(`supabase/migrations/${file}`,'utf8')), `Installer is current: ${file}`);
+    const installer = await readFile("supabase/INSTALL.sql", "utf8");
+    for (const file of (await readdir("supabase/migrations")).filter((f) =>
+      f.endsWith(".sql"),
+    )) {
+      assert.ok(
+        installer.includes(
+          await readFile(`supabase/migrations/${file}`, "utf8"),
+        ),
+        `Installer is current: ${file}`,
+      );
     }
     await db.exec(installer);
-    assert.equal((await db.query('select count(*)::int n from supabase_migrations.schema_migrations')).rows[0].n,4);
+    assert.equal(
+      (
+        await db.query(
+          "select count(*)::int n from supabase_migrations.schema_migrations",
+        )
+      ).rows[0].n,
+      4,
+    );
     const owner = "00000000-0000-4000-8000-000000000001",
       other = "00000000-0000-4000-8000-000000000002",
       admin = "00000000-0000-4000-8000-000000000003";

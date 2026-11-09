@@ -6,8 +6,4 @@ export async function session() {
   if (!data.user) throw new Error("Please sign in to continue.");
   return { db, user: data.user };
 }
-export async function checked(query) {
-  const { data, error } = await query;
-  if (error) throw error;
-  return data;
-}
+export {checked} from "../utils/query.js";

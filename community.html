@@ -3,35 +3,103 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Neighbourhood conversations. · Borough</title>
+    <title>Community forum - Borough</title>
   </head>
   <body>
     <header id="header"></header>
     <main id="main" class="container page">
-      <h1>Neighbourhood conversations.</h1>
-      <p id="status" role="status"></p>
-      <div id="topics"></div>
-      <h2 class="mt-5">Start a conversation</h2>
-      <form class="auth">
-        <label class="form-label" for="title">Title</label
-        ><input
-          class="form-control"
-          id="title"
-          name="title"
-          minlength="5"
-          maxlength="180"
-          required
-        /><label class="form-label" for="body">Your message</label
-        ><textarea
-          class="form-control"
-          id="body"
-          name="body"
-          minlength="10"
-          maxlength="10000"
-          required
-        ></textarea
-        ><button class="btn btn-dark mt-3">Submit topic</button>
-      </form>
+      <section class="forum-hero">
+        <p class="eyebrow">The Borough community</p>
+        <h1>Your neighbourhood, in conversation.</h1>
+        <p>Ask a question. Share a discovery. Get to know the people nearby.</p>
+        <a href="#new-topic" class="btn btn-dark">Start a discussion</a>
+      </section>
+      <div class="forum-layout">
+        <section>
+          <div class="forum-toolbar">
+            <h2>Discussion board</h2>
+            <span id="topic-count"></span>
+          </div>
+          <form id="forum-search" class="forum-search">
+            <label for="query" class="visually-hidden"
+              >Search topic titles</label
+            ><input
+              type="search"
+              id="query"
+              class="form-control"
+              placeholder="Find a conversation..."
+            /><label for="scope" class="visually-hidden">Topic scope</label
+            ><select id="scope" class="form-select">
+              <option value="all">All discussions</option>
+              <option value="mine">My discussions</option></select
+            ><button class="btn btn-dark">Search</button>
+          </form>
+          <p id="status" role="status"></p>
+          <div class="forum-table">
+            <div class="forum-table-heading">
+              <span>Topic</span><span>Replies</span><span>Started</span>
+            </div>
+            <div id="topics"></div>
+          </div>
+          <div class="forum-pagination">
+            <button class="btn btn-outline-dark" id="previous" disabled>
+              Previous</button
+            ><span id="page-number">Page 1</span
+            ><button class="btn btn-outline-dark" id="next" disabled>
+              Next
+            </button>
+          </div>
+        </section>
+        <aside class="forum-sidebar">
+          <div class="card">
+            <p class="eyebrow">A place for everyone</p>
+            <h2>Good conversations start here.</h2>
+            <p>
+              Be kind, stay local and share what you know. Topics and replies
+              are reviewed before publication.
+            </p>
+            <a href="/directory.html">Discover local businesses</a>
+          </div>
+          <div class="card mt-3">
+            <h3>Need a starting point?</h3>
+            <p>
+              Ask for a local recommendation, share an event or introduce your
+              business.
+            </p>
+          </div>
+        </aside>
+      </div>
+      <section id="new-topic" class="compose-panel">
+        <div>
+          <p class="eyebrow">Join the conversation</p>
+          <h2>Start something local.</h2>
+          <p>
+            A clear title helps your neighbours find and answer your question.
+          </p>
+        </div>
+        <form id="compose">
+          <label class="form-label" for="title">Discussion title</label
+          ><input
+            class="form-control"
+            name="title"
+            id="title"
+            minlength="5"
+            maxlength="180"
+            required
+          /><label class="form-label" for="body">Your message</label
+          ><textarea
+            class="form-control"
+            id="body"
+            name="body"
+            rows="5"
+            minlength="10"
+            maxlength="10000"
+            required
+          ></textarea
+          ><button class="btn btn-dark mt-3">Submit for review</button>
+          <p id="compose-status" role="status"></p>
+        </form>
+      </section>
     </main>
     <footer id="footer"></footer>
     <script type="module" src="/src/pages/community.js"></script>
