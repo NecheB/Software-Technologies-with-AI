@@ -14,17 +14,18 @@ async function search() {
  try {
   const db = requireClient();
   const data = new FormData(form);
-  let query = db.from('businesses').select('id,name,tagline,city,price_level,categories(name)', { count: 'exact' }).eq('status','approved');
+  let query = db.from('directory_entries').select('*', { count: 'exact' }).eq('status','approved');
   const term = data.get('q').trim();
   if (term) query = query.textSearch('search_vector',term,{type:'websearch',config:'english'});
-  if (data.get('category')) query = query.eq('category_id',data.get('category'));
+  if (data.get('category')) { const children=await db.from('categories').select('id').eq('parent_id',data.get('category'));if(children.error)throw children.error;query=query.in('category_id',[data.get('category'),...children.data.map(c=>c.id)]); }
   if (data.get('city').trim()) query = query.ilike('city',data.get('city').trim());
   if (data.get('price')) query = query.eq('price_level',Number(data.get('price')));
-  query = query.order(data.get('sort') === 'name' ? 'name' : 'created_at', {ascending:data.get('sort') === 'name'}).range(page*12,page*12+11);
+  if(data.get('rating')) query=query.gte('average_rating',Number(data.get('rating')));
+  query = query.order(({name:'name',rating:'average_rating',newest:'created_at'})[data.get('sort')] || 'created_at', {ascending:data.get('sort') === 'name'}).order('id').range(page*12,page*12+11);
   const {data:rows,error,count} = await query;
   if (current !== request) return;
   if(error) throw error;
-  results.innerHTML = rows.map(row => `<div class="col-md-6 col-lg-4"><article class="card"><p class="tag">${escapeHtml(row.categories?.name || 'Local business')} ? ${'?'.repeat(row.price_level)}</p><h2><a href="/business.html?id=${encodeURIComponent(row.id)}">${escapeHtml(row.name)}</a></h2><p>${escapeHtml(row.tagline)}</p><p class="mb-0 mt-auto">${escapeHtml(row.city)}</p></article></div>`).join('');
+  results.innerHTML = rows.map(row => `<div class="col-md-6 col-lg-4"><article class="card"><p class="tag">${escapeHtml(row.category_name || 'Local business')} ? ${'?'.repeat(row.price_level)}</p><h2><a href="/business.html?id=${encodeURIComponent(row.id)}">${escapeHtml(row.name)}</a></h2><p>${escapeHtml(row.tagline)}</p><p class="mb-0 mt-auto">${escapeHtml(row.city)} ? ${Number(row.average_rating).toFixed(1)} ? (${row.review_count})</p></article></div>`).join('');
   message(status,count ? `${count} places ? Page ${page+1}` : 'No places found. Try a different search.');
   document.querySelector('#previous').disabled = page === 0;
   document.querySelector('#next').disabled = (page+1)*12 >= count;
