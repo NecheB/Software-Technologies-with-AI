@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+[template.environment]
+  VITE_SUPABASE_URL = "Your Supabase project URL"
+  VITE_SUPABASE_PUBLISHABLE_KEY = "Your Supabase publishable key"

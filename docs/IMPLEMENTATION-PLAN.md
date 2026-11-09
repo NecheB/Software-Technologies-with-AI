@@ -4,26 +4,26 @@ Source: Soft-Tech-with-AI-Capstone-Project.docx, reviewed 9 November 2026. The o
 
 ## Mandatory course requirements
 
-| Requirement | Implementation and acceptance evidence |
-| --- | --- |
-| HTML, CSS, JavaScript, Bootstrap; no UI framework or TypeScript | Vite multi-page HTML entry points, JavaScript modules, Bootstrap and custom CSS |
-| Node, npm, Vite | package.json scripts, lockfile, production build |
-| Client/server REST architecture | Supabase JS client communicating with hosted Supabase Auth, PostgREST and Storage |
-| Separate screens; at least five | Home, directory, business detail, sign in, register, reset password, account, owner dashboard, business editor, community, topic, advertising, moderation, users, taxonomy, settings, audit history |
-| Modular structure | pages, components, services, utils, styles |
-| AI agent instructions | .github/copilot-instructions.md |
-| Supabase DB, Auth, JWT, RLS | SQL migrations, real authentication; no local fake auth |
-| Normal/admin roles and user_roles | user, owner, moderator, admin; database permission evaluation |
-| At least four related tables | profiles, user_roles, role_permissions, restrictions, categories, businesses, business_files, reviews, topics, posts, advertisements, audit_log, settings |
-| Normalization, indexing, relationships | FK constraints, checks and lookup indexes in migrations |
-| Migration history committed and synced | supabase/migrations; remote verification pending connection |
-| File upload and download | Private Supabase bucket, scoped object policies, signed downloads |
-| Live public deployment | Production build and public host; verify configured backend |
-| Sample credentials | Create real test accounts after Supabase connection; document test access |
-| Public GitHub repo; push successful changes | New repository; incremental meaningful commits and pushes |
-| At least 15 commits on at least three days | Real development history; never backdate. Three-day requirement remains pending until actual work on three dates |
-| Documentation | README, architecture diagram, setup, security model, acceptance checklist, AI log |
-| AI assisted prompt/implement/test/refine loop | Real AI development log and tested incremental commits |
+| Requirement                                                     | Implementation and acceptance evidence                                                                                                                                                              |
+| --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| HTML, CSS, JavaScript, Bootstrap; no UI framework or TypeScript | Vite multi-page HTML entry points, JavaScript modules, Bootstrap and custom CSS                                                                                                                     |
+| Node, npm, Vite                                                 | package.json scripts, lockfile, production build                                                                                                                                                    |
+| Client/server REST architecture                                 | Supabase JS client communicating with hosted Supabase Auth, PostgREST and Storage                                                                                                                   |
+| Separate screens; at least five                                 | Home, directory, business detail, sign in, register, reset password, account, owner dashboard, business editor, community, topic, advertising, moderation, users, taxonomy, settings, audit history |
+| Modular structure                                               | pages, components, services, utils, styles                                                                                                                                                          |
+| AI agent instructions                                           | .github/copilot-instructions.md                                                                                                                                                                     |
+| Supabase DB, Auth, JWT, RLS                                     | SQL migrations, real authentication; no local fake auth                                                                                                                                             |
+| Normal/admin roles and user_roles                               | user, owner, moderator, admin; database permission evaluation                                                                                                                                       |
+| At least four related tables                                    | profiles, user_roles, role_permissions, restrictions, categories, businesses, business_files, reviews, topics, posts, advertisements, audit_log, settings                                           |
+| Normalization, indexing, relationships                          | FK constraints, checks and lookup indexes in migrations                                                                                                                                             |
+| Migration history committed and synced                          | supabase/migrations; remote verification pending connection                                                                                                                                         |
+| File upload and download                                        | Private Supabase bucket, scoped object policies, signed downloads                                                                                                                                   |
+| Live public deployment                                          | Production build and public host; verify configured backend                                                                                                                                         |
+| Sample credentials                                              | Create real test accounts after Supabase connection; document test access                                                                                                                           |
+| Public GitHub repo; push successful changes                     | New repository; incremental meaningful commits and pushes                                                                                                                                           |
+| At least 15 commits on at least three days                      | Real development history; never backdate. Three-day requirement remains pending until actual work on three dates                                                                                    |
+| Documentation                                                   | README, architecture diagram, setup, security model, acceptance checklist, AI log                                                                                                                   |
+| AI assisted prompt/implement/test/refine loop                   | Real AI development log and tested incremental commits                                                                                                                                              |
 
 ## Additional requested functionality
 

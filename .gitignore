@@ -8,3 +8,5 @@ supabase/.temp/
 coverage/
 test-results/
 *.log
+
+.netlify/
